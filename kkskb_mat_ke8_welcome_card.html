@@ -1,0 +1,569 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body { background: transparent; }
+
+  .card-wrapper {
+    font-family: 'Amiri', Georgia, serif;
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1a0a2e 0%, #0d1f3c 40%, #0a2a1a 100%);
+    overflow: hidden;
+    padding: 2rem 1rem 3rem;
+  }
+
+  .star-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .geo-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.07;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .top-ornament {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .top-ornament svg { width: 280px; height: 60px; }
+
+  .bismillah {
+    text-align: center;
+    font-size: 2rem;
+    color: #f5d680;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 0 20px rgba(245,214,128,0.4);
+    font-family: 'Amiri', serif;
+  }
+
+  .welcome-badge {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .welcome-badge span {
+    display: inline-block;
+    background: rgba(245,214,128,0.12);
+    border: 1px solid rgba(245,214,128,0.35);
+    color: #f5d680;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    padding: 4px 20px;
+    border-radius: 20px;
+    text-transform: uppercase;
+  }
+
+  .main-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(245,214,128,0.25);
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .event-title {
+    text-align: center;
+    font-size: 1.1rem;
+    color: rgba(245,214,128,0.7);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .event-name {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #f5d680;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 30px rgba(245,214,128,0.3);
+  }
+
+  .event-org {
+    text-align: center;
+    font-size: 1rem;
+    color: rgba(200,230,200,0.85);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 1.2rem 0;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,214,128,0.4), transparent);
+  }
+  .divider-icon { color: #f5d680; font-size: 1rem; }
+
+  .info-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+
+  .info-item {
+    text-align: center;
+  }
+
+  .info-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,214,128,0.55);
+    margin-bottom: 3px;
+  }
+
+  .info-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #f5d680;
+  }
+
+  .info-sub {
+    font-size: 0.8rem;
+    color: rgba(200,220,200,0.7);
+    font-style: italic;
+  }
+
+  .venue-btn {
+    display: block;
+    text-align: center;
+    background: rgba(245,214,128,0.1);
+    border: 1px solid rgba(245,214,128,0.35);
+    color: #f5d680;
+    padding: 10px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    margin: 0 auto;
+    width: fit-content;
+    font-family: 'Amiri', serif;
+  }
+  .venue-btn:hover {
+    background: rgba(245,214,128,0.2);
+    transform: translateY(-1px);
+  }
+  .venue-icon { margin-right: 6px; }
+
+  .programme-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(245,214,128,0.18);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prog-title {
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,214,128,0.65);
+    margin-bottom: 1.2rem;
+  }
+
+  .prog-section {
+    margin-bottom: 1rem;
+  }
+
+  .prog-section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,180,120,0.5);
+    margin-bottom: 6px;
+    padding-left: 4px;
+    border-left: 2px solid rgba(245,214,128,0.25);
+    padding-left: 8px;
+  }
+
+  .prog-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .prog-item:last-child { border-bottom: none; }
+
+  .prog-time {
+    min-width: 72px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #f5d680;
+    padding-top: 1px;
+    letter-spacing: 0.04em;
+  }
+
+  .prog-desc {
+    font-size: 0.87rem;
+    color: rgba(220,235,220,0.85);
+    line-height: 1.5;
+  }
+  .prog-desc strong {
+    display: block;
+    color: rgba(245,214,128,0.9);
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+  }
+  .prog-desc .sub { font-size: 0.78rem; color: rgba(180,200,180,0.6); font-style: italic; }
+
+  .prog-break {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    color: rgba(180,200,180,0.55);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  .bottom-ornament {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+
+  .note {
+    text-align: center;
+    font-size: 0.72rem;
+    color: rgba(200,200,200,0.4);
+    font-style: italic;
+    letter-spacing: 0.04em;
+  }
+
+  .sparkle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes float-up {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-80px) scale(0); opacity: 0; }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 20px rgba(245,214,128,0.4); }
+    50% { text-shadow: 0 0 40px rgba(245,214,128,0.8), 0 0 60px rgba(245,214,128,0.3); }
+  }
+
+  .event-name { animation: pulse-glow 3s ease-in-out infinite; }
+
+  .crescent-moon { animation: twinkle 4s ease-in-out infinite; }
+</style>
+
+<canvas class="sparkle-canvas" id="sparkleCanvas"></canvas>
+
+<div class="card-wrapper" id="cardWrapper">
+
+  <svg class="geo-bg" viewBox="0 0 800 1200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="islamic-geo" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+        <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="#f5d680" stroke-width="0.5"/>
+        <polygon points="50,20 80,35 80,65 50,80 20,65 20,35" fill="none" stroke="#f5d680" stroke-width="0.3"/>
+        <line x1="50" y1="5" x2="50" y2="20" stroke="#f5d680" stroke-width="0.3"/>
+        <line x1="95" y1="27.5" x2="80" y2="35" stroke="#f5d680" stroke-width="0.3"/>
+        <line x1="95" y1="72.5" x2="80" y2="65" stroke="#f5d680" stroke-width="0.3"/>
+        <line x1="50" y1="95" x2="50" y2="80" stroke="#f5d680" stroke-width="0.3"/>
+        <line x1="5" y1="72.5" x2="20" y2="65" stroke="#f5d680" stroke-width="0.3"/>
+        <line x1="5" y1="27.5" x2="20" y2="35" stroke="#f5d680" stroke-width="0.3"/>
+      </pattern>
+    </defs>
+    <rect width="800" height="1200" fill="url(#islamic-geo)"/>
+  </svg>
+
+  <div class="content">
+
+    <div class="top-ornament">
+      <svg viewBox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#f5d680" stroke-width="0.8" opacity="0.7">
+          <path d="M140 10 L200 30 L140 50 L80 30 Z"/>
+          <path d="M140 18 L190 30 L140 42 L90 30 Z" stroke-width="0.4" opacity="0.5"/>
+          <circle cx="140" cy="30" r="5" fill="#f5d680" opacity="0.8"/>
+          <line x1="10" y1="30" x2="110" y2="30" stroke-dasharray="3,4"/>
+          <line x1="170" y1="30" x2="270" y2="30" stroke-dasharray="3,4"/>
+          <polygon points="20,30 30,24 40,30 30,36" fill="#f5d680" opacity="0.5"/>
+          <polygon points="240,30 250,24 260,30 250,36" fill="#f5d680" opacity="0.5"/>
+          <circle cx="55" cy="30" r="2" fill="#f5d680" opacity="0.4"/>
+          <circle cx="225" cy="30" r="2" fill="#f5d680" opacity="0.4"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="bismillah">﷽</div>
+
+    <div class="welcome-badge"><span>Jemputan Khas</span></div>
+
+    <div class="main-card">
+      <div class="event-title">Mesyuarat Agung Tahunan</div>
+      <div class="event-name">Ke-8</div>
+      <div class="event-org">Koperasi Keluarga Sumiran Kuching Berhad (KKSKB)</div>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">✦</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-item">
+          <div class="info-label">Tarikh</div>
+          <div class="info-value">28 Jun 2026</div>
+          <div class="info-sub">Ahad</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Masa</div>
+          <div class="info-value">9:00 PG</div>
+          <div class="info-sub">hingga 5:00 PTG</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Tempat</div>
+          <div class="info-value">Raia Hotel</div>
+          <div class="info-sub">Kuching, Sarawak</div>
+        </div>
+      </div>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <span class="divider-icon">☽</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <a class="venue-btn" href="https://maps.google.com/?q=Raia+Hotel+Kuching+Sarawak" target="_blank">
+        <span class="venue-icon">📍</span> Lihat Lokasi di Google Maps
+      </a>
+    </div>
+
+    <div class="programme-card">
+      <div class="prog-title">✦ Tentatif Program ✦</div>
+
+      <div class="prog-section">
+        <div class="prog-section-label">Ketibaan & Pendaftaran</div>
+        <div class="prog-item">
+          <div class="prog-time">9:00 PG</div>
+          <div class="prog-desc">
+            <strong>Ketibaan Ahli & Makan Pagi</strong>
+            <span class="sub">Pengesahan kehadiran oleh Setiausaha</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-section">
+        <div class="prog-section-label">Majlis Bermula</div>
+        <div class="prog-item">
+          <div class="prog-time">9:15 PG</div>
+          <div class="prog-desc">
+            <strong>Majlis Rasmi Bermula</strong>
+            <span class="sub">Bacaan Doa · Kata-kata aluan Ahli Lembaga Pengarah merangkap Pengarah Eksekutif</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-section">
+        <div class="prog-section-label">Sesi Mesyuarat</div>
+        <div class="prog-item">
+          <div class="prog-time">9:30 PG</div>
+          <div class="prog-desc">
+            <strong>Sesi Mesyuarat Bermula</strong>
+            <span class="sub">Pelantikan Pengerusi · Pengesahan minit · Laporan Lembaga & Audit · Pembahagian keuntungan · Belanjawan 2026/2027 · Pindaan Undang-undang Kecil (jika ada)</span>
+          </div>
+        </div>
+        <div class="prog-break">
+          <span>🍴</span> <em>12:45 TGH — Rehat Makan Tengah Hari</em>
+        </div>
+        <div class="prog-item">
+          <div class="prog-time">2:00 PTG</div>
+          <div class="prog-desc">
+            <strong>Sambung Sesi Mesyuarat</strong>
+            <span class="sub">Pelantikan panel firma audit · Had keterhutangan · Pelaburan · Pemilihan Anggota Lembaga 2026–2027 · Jawatankuasa penentusahan · Hal-hal lain</span>
+          </div>
+        </div>
+        <div class="prog-break">
+          <span>☕</span> <em>3:45 PTG — Rehat Minum Petang</em>
+        </div>
+        <div class="prog-item">
+          <div class="prog-time">4:00 PTG</div>
+          <div class="prog-desc">
+            <strong>Penutup Mesyuarat</strong>
+            <span class="sub">Selesai dan pembubaran mesyuarat</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prog-section">
+        <div class="prog-section-label">Penutup</div>
+        <div class="prog-item">
+          <div class="prog-time">5:00 PTG</div>
+          <div class="prog-desc">
+            <strong>Bersurai</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-ornament">
+      <svg viewBox="0 0 280 40" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#f5d680" stroke-width="0.7" opacity="0.6">
+          <line x1="10" y1="20" x2="270" y2="20" stroke-dasharray="2,5"/>
+          <circle cx="140" cy="20" r="6" fill="#f5d680" opacity="0.5"/>
+          <circle cx="140" cy="20" r="3" fill="#f5d680" opacity="0.9"/>
+          <circle cx="80" cy="20" r="2" fill="#f5d680" opacity="0.4"/>
+          <circle cx="200" cy="20" r="2" fill="#f5d680" opacity="0.4"/>
+          <polygon points="50,20 60,14 70,20 60,26" fill="none" stroke-width="0.5"/>
+          <polygon points="210,20 220,14 230,20 220,26" fill="none" stroke-width="0.5"/>
+        </g>
+      </svg>
+    </div>
+
+    <p class="note">* Masa adalah anggaran sahaja dan tertakluk kepada perubahan.</p>
+
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('sparkleCanvas');
+const ctx = canvas.getContext('2d');
+const particles = [];
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function rand(min, max) { return Math.random() * (max - min) + min; }
+
+function Particle(x, y) {
+  this.x = x;
+  this.y = y;
+  this.vx = rand(-2, 2);
+  this.vy = rand(-4, -1);
+  this.alpha = 1;
+  this.size = rand(3, 9);
+  this.color = ['#f5d680','#ffe066','#ffffff','#c8f5c8','#99ccff'][Math.floor(rand(0,5))];
+  this.shape = Math.random() > 0.4 ? 'star' : 'circle';
+  this.rotation = rand(0, Math.PI * 2);
+  this.rotationSpeed = rand(-0.1, 0.1);
+  this.life = 0;
+  this.maxLife = rand(40, 80);
+}
+
+Particle.prototype.update = function() {
+  this.x += this.vx;
+  this.y += this.vy;
+  this.vy += 0.03;
+  this.rotation += this.rotationSpeed;
+  this.life++;
+  this.alpha = 1 - (this.life / this.maxLife);
+};
+
+Particle.prototype.draw = function() {
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, this.alpha);
+  ctx.translate(this.x, this.y);
+  ctx.rotate(this.rotation);
+  ctx.fillStyle = this.color;
+  ctx.shadowColor = this.color;
+  ctx.shadowBlur = 6;
+  if (this.shape === 'star') {
+    drawStar(ctx, 0, 0, this.size, this.size * 0.4, 5);
+  } else {
+    ctx.beginPath();
+    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+};
+
+function drawStar(ctx, cx, cy, outerR, innerR, points) {
+  ctx.beginPath();
+  for (let i = 0; i < points * 2; i++) {
+    const r = i % 2 === 0 ? outerR : innerR;
+    const angle = (i / (points * 2)) * Math.PI * 2 - Math.PI / 2;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function spawnBurst(x, y, count) {
+  for (let i = 0; i < count; i++) {
+    particles.push(new Particle(x, y));
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].life >= particles[i].maxLife) particles.splice(i, 1);
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+
+document.getElementById('cardWrapper').addEventListener('click', function(e) {
+  spawnBurst(e.clientX, e.clientY, 28);
+});
+
+document.getElementById('cardWrapper').addEventListener('touchstart', function(e) {
+  const t = e.touches[0];
+  spawnBurst(t.clientX, t.clientY, 28);
+}, { passive: true });
+
+(function ambientStars() {
+  const positions = [
+    [0.1, 0.05], [0.9, 0.08], [0.5, 0.03], [0.3, 0.12], [0.75, 0.06],
+    [0.15, 0.9], [0.85, 0.88], [0.55, 0.95], [0.4, 0.85], [0.7, 0.92]
+  ];
+  positions.forEach(([fx, fy]) => {
+    setInterval(() => {
+      spawnBurst(fx * W, fy * H, 2);
+    }, rand(2000, 6000));
+  });
+})();
+</script>
